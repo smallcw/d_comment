@@ -15,14 +15,6 @@ use cmf\controller\PluginBaseController;
 
 class IndexController extends PluginBaseController {
 
-    public function _initialize() {
-        $where = ['status' => 1, 'name' => $this->getPlugin()->info['name']];
-        $vo    = PluginModel::where($where)->cache(60, true)->find();
-        if (!$vo) {
-            $this->error('评论插件未启用！');
-        }
-    }
-
     public function add() {
         $config = $this->getPlugin()->getConfig();
         if (!$config || $config['comment_type'] == 2) {
@@ -38,9 +30,10 @@ class IndexController extends PluginBaseController {
 
             $data                = $this->request->param();
             $data['user_id']     = $userid;
-            $data['more']        = $data['object_title'];
             $data['create_time'] = time();
-
+            $data['more']        = json_encode([
+                'title' => $data['object_title']
+            ]);
             $config['comment_check'] == 1 && $data['status'] = 0;
 
             $result = $this->validate($data,

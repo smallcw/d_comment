@@ -60,20 +60,23 @@
             </thead>
             <tbody>
                 <foreach name="list" item="vo">
-                <php>$url = json_decode(base64_decode($vo['url']),true);</php>
+                <php>
+                    $url = json_decode(base64_decode($vo['url']),true);
+                    $vo['more'] = (array)$vo['more']; 
+                </php>
                 <tr>
                     <td>
                         <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
                                value="{$vo.id}" title="ID:{$vo.id}">
                     </td>
                     <td>{$vo.id}</td>
-                    <td>{$vo.more}</td>
+                    <td>{$vo.more.title}</td>
                     <td >{$vo.username}</td>
                     <td><gt name="vo.parent_id" value="0">@{$vo.to_username}&nbsp;<br /></gt>{$vo.content}</td>
                     <td><eq name="vo.status" value="1">通过<else/>待审核</eq></td>
                     <td>{:date('Y-m-d H:i',$vo['create_time'])}</td>
                     <td>
-                        <a target="_blank" href="{:cmf_url($url['action'],array('id'=>$url['param']['id'],'cid'=>$url['param']['cid']))}#comment{$vo.id}">查看</a>
+                        <a target="_blank" href="{:cmf_url($url['action'],array('id'=>$url['param']['id']))}">查看</a>
                         <a href="{:cmf_plugin_url('DComment://AdminIndex/del',array('id'=>$vo.id,'oid'=>$vo.object_id))}" class="js-ajax-delete">{:lang('DELETE')}</a>
                     </td>
                 </tr>

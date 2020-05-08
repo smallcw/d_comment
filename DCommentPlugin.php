@@ -20,7 +20,7 @@ class DCommentPlugin extends Plugin {
         'status'      => 1,
         'author'      => 'daliycode',
         'version'     => '1.3',
-        'demo_url'    => 'http://www.daliycode.com',
+        'demo_url'    => '',
         'author_url'  => 'http://www.daliycode.com',
     ];
 
